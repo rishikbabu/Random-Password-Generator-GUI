@@ -1,0 +1,93 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class EmailLoginPage extends JFrame {
+
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JLabel passwordLabel;
+
+    public EmailLoginPage() {
+        setTitle("Email Login Page");
+        setSize(400, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create components
+        emailField = new JTextField(20);
+        passwordField = new JPasswordField(20);
+        passwordLabel = new JLabel("Generated Password: ");
+
+        JButton loginButton = new JButton("Login");
+        JButton generateButton = new JButton("Generate Password");
+
+        // Set layout manager
+        setLayout(new BorderLayout());
+
+        // Add components to the frame
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+        panel.add(new JLabel("Email: "));
+        panel.add(emailField);
+        panel.add(new JLabel("Password: "));
+        panel.add(passwordField);
+        panel.add(new JLabel(""));
+        panel.add(loginButton);
+        panel.add(generateButton);
+        panel.add(passwordLabel);
+
+        // Add action listeners
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Perform login logic here
+                String email = emailField.getText();
+                char[] password = passwordField.getPassword();
+                // Add your login logic here
+                // For demonstration, we are just displaying the entered email and password
+                JOptionPane.showMessageDialog(EmailLoginPage.this,
+                        "Email: " + email + "\nPassword: " + new String(password),
+                        "Login Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        generateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Generate a random password
+                String generatedPassword = generateRandomPassword();
+                // Display the generated password
+                passwordLabel.setText("Generated Password: " + generatedPassword);
+            }
+        });
+
+        // Add panel to the frame
+        add(panel, BorderLayout.CENTER);
+
+        // Set frame visibility
+        setVisible(true);
+    }
+
+    private String generateRandomPassword() {
+        // Add your random password generation logic here
+        // For simplicity, we are generating a random 8-character password
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int index = (int) (Math.random() * characters.length());
+            password.append(characters.charAt(index));
+        }
+        return password.toString();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new EmailLoginPage();
+            }
+        });
+    }
+}
+.
